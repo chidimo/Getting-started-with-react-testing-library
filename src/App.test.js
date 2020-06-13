@@ -20,10 +20,14 @@ describe("<App />", () => {
     await waitForElementToBeRemoved(() => screen.getByText(/Fetching todos/i));
   });
 
-  it("Can click to view a todo item", async () => {
+  it("Renders todos, and I can click to view a todo item", async () => {
     render(<App />);
 
     await waitForElementToBeRemoved(() => screen.getByText(/Fetching todos/i));
+
+    todos.slice(0, 15).forEach((td) => {
+      expect(screen.getByText(td.title)).toBeInTheDocument();
+    });
 
     const { id, title, completed, userId } = todos[0];
     axios.get.mockImplementationOnce(() =>
